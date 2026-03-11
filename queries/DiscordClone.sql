@@ -1,0 +1,60 @@
+USE master
+GO
+
+CREATE DATABASE DiscordClone;
+GO
+
+CREATE TABLE Roles (
+	RoleId INT IDENTITY(1, 1) NOT NULL,
+	Code NVARCHAR(10) NOT NULL,
+	ShowName NVARCHAR(100) NOT NULL,
+	CreatedAt DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME()
+);
+GO
+
+CREATE TABLE UserStatus (
+	UserStatusID  INT IDENTITY(1,1) 
+)
+CREATE TABLE Users (
+	UserID UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
+	UserName NVARCHAR(32) NOT NULL,
+	DisplayName NVARCHAR(100) NOT NULL,
+	--RoleID INT NOT NULL REFERENCES Roles (RoleId), hace una copia de los datos de la tabla
+	CreatedAt DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME()
+	--CONSTRAINT FK_ROLES_ROLE_ID FOREIGN_KEY (RoleId) REFERENCES Roles (RoleId), hace referencia y se basa solo en los ddatos de la tabla ni mas ni menos
+);
+GO
+
+CREATE TABLE Collections (
+	CollectionId UNIQUEIDENTIFIER NOT NULL DEFAULT NEWID(),
+	Name NVARCHAR(50) NOT NULL,
+	Description NVARCHAR(100) NOT NULL DEFAULT('This is my collection!'),
+	CreatedAt DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME()
+);
+GO
+
+CREATE TABLE Items (
+	ItemId INT IDENTITY(1,1) NOT NULL,
+	Name NVARCHAR(50) NOT NULL,
+	CreatedAt DATETIME2 NOT NULL DEFAULT SYSUTCDATETIME()
+)
+GO
+
+INSERT INTO Items (Name)
+VALUES
+('Hollow Knight'),
+('osu!')
+
+CREATE TABLE CollectionsItems (
+	CollectionId UNIQUEIDENTIFIER NOT NULL REFERENCES Collections (CollectionId),
+	ItemId INT NOT NULL REFERENCES Items(ItemId) ON DELETE CASCADE,
+	CONSTRAINT PK_CollectionsItems_CollectionId_ItemID PRIMARY KEY (CollectionId, ItemId)
+);
+GO
+
+CREATE TABLE UsersRoles (
+	UserId UNIQUEIDENTIFIER NOT NULL, 
+	RoleId INT NOT NULL
+	CONSTRAINT PRIMARY KEY (UserId, RoleId)
+);
+GO
