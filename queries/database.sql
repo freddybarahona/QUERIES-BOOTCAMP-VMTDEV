@@ -181,15 +181,27 @@ CREATE TABLE Posts (
 );
 GO
 
-CREATE TABLE Tags(
-	TagsId INT IDENTITY(1,1)  NOT NULL,
-	Name NVARCHAR(20) NOT NULL,
-	CreatedAt DATETIME 
-)
-
 CREATE TABLE PostTags(
-	
-)
+	PostID         UNIQUEIDENTIFIER   NOT NULL,
+    TagId          INT IDENTITY(1, 1) NOT NULL,
+    CreatedAt      DATETIME2          NOT NULL DEFAULT SYSUTCDATETIME(),
+    UpdatedAt      DATETIME2          NOT NULL DEFAULT SYSUTCDATETIME(),
+    DeletedAt      DATETIME2          NULL,        -- Soft delete
+    CONSTRAINT PK_PosTTag PRIMARY KEY (PostID, TagId),
+    CONSTRAINT FK_PostTag_Post FOREIGN KEY (PostID)
+    REFERENCES Posts(Id) ON DELETE CASCADE,
+    CONSTRAINT FK_PostTag_Tag FOREIGN KEY (TagId)
+    REFERENCES Tags(Id) ON DELETE CASCADE -- define que pasa cuando se elimina el registro padre
+);
+GO
+
+CREATE TABLE Tags(
+	Id             INT IDENTITY(1, 1)     NOT NULL,
+	TagName        NVARCHAR(20)           NOT NULL,
+	CreatedAt      DATETIME2              NOT NULL DEFAULT SYSUTCDATETIME(),
+    CONSTRAINT PK_Tags PRIMARY KEY (Id)
+);
+GO
 ------------------------------------------------------------------------------------
 -- ============================================================
 --  TABLA: Permissions  (catálogo de permisos disponibles)
