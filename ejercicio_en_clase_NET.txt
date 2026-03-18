@@ -1,0 +1,49 @@
+using System;
+
+namespace ejercicio_en_clase
+{
+	class Program 
+	{	
+		public Interface calculadora
+		{
+			void Suma();
+			void Resta();
+			void Multi();
+			void Division();
+		}
+
+		class Suma : Calculadora {
+			public override void Suma(int arg1, int arg2){
+				return arg1 + arg2;
+			}
+		class Resta : Calculadora {
+			public override void Suma(int arg1, int arg2){
+				return arg1 - arg2;
+			}
+		class Multi : Calculadora {
+			public override void Suma(int arg1, int arg2){
+				return arg1 * arg2;
+			}
+		class Division : Calculadora {
+			public override void Suma(int arg1, int arg2){
+				return arg1 / arg2;
+			}
+}
+		static void Main(string[] args)
+		{
+			while(input is null)
+			{
+				try
+				{
+					var input 1= Console.ReadLine();		
+				}catch(exception)
+				{
+					Console.WriteLine("No es un valor valido");
+				}catch(ArgumentNullException)
+				{
+					Console.WriteLine("no ha rellenado el valor requerido");
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,5 @@
+--Creen una tabla tags y la tabla 
+--intermedia postTags. Un post puede 
+--tener muchos tags, un tag puede 
+--estar en muchos posts. incluyan 
+--constraints correctos
